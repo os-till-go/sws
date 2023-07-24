@@ -1,6 +1,7 @@
 import { update_rotation, query_pointer_position, update_text, create_text, gameobjects_overlap, update_color, 
 update_scale, create_sprite, create_rectangle, query_position, update_position, update_loop, get_loop_count,set_scale,  
-build_game, input_key_down, pointer_over_gameobject, input_left_mouse_down, update_to_top, get_game_time } from "arcade_2d";
+build_game, input_key_down, pointer_over_gameobject, input_left_mouse_down,set_fps, play_audio, create_audio, loop_audio
+, debug_log, stop_audio, update_to_top, get_game_time } from "arcade_2d";
 
 const start_up_text = create_text("Welcome to the arcade game box!");
 const start_up_text2 = create_text("Move the stickman to a game to start!");
@@ -94,7 +95,7 @@ update_loop(game_state => {
    update_position(player, new_position);
    
 //-----------------------------------------------------------------------------------   
-   
+   const audio = create_audio("https://labs.phaser.io/assets/audio/SoundEffects/key.wav", 1);
 
 //--------------------------catch the game---------------------------------------
 
@@ -110,7 +111,15 @@ if(gameobjects_overlap(player, gameobjects[0])){
       flag = false;
       if(input_key_down("y")){
           //game1
-          update_text(start_text1, "it work!");
+          
+update_loop(game_state => {
+   // Press space to play audio
+   if (input_key_down("p")) {
+       play_audio(audio);
+   }
+});
+build_game();
+
       }
       if(input_key_down("n")){
           update_position(player, [300, 300]);
