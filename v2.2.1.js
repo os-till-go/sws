@@ -624,6 +624,7 @@ update_loop(game_state => {
         else { 
             //update_text(game_text, stringify(gameobjects_overlap(player[cond], bullets_towards_right2[i])));
             if(gameobjects_overlap(player[cond], bullets_towards_right2[i])){
+                let flag = false;
                 update_position(bullets_towards_right2[i], [inf, inf]);
                 is_bullet2_appear[i] = false;
                 //update_text(game_text, "SHOT");
@@ -636,6 +637,7 @@ update_loop(game_state => {
                     else {
                         hp1 = hp1 + defense_hp1 - SHOT_DEHP;
                         defense_hp1 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -667,11 +669,19 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player[cond], [-inf, -inf]);
-                cond = attacked_left;
-                update_position(player[cond], [x, y]);
+            if(!flag){
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_left;
+                    update_position(player[cond], [x, y]);
+                }
+                else{
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_left;
+                    update_position(player[cond], [x + SHOT_DIS, y]);
+                }
             }
             if(gameobjects_overlap(player[cond], bullets_towards_left2[i])){
+                let flag = false;
                 update_position(bullets_towards_left2[i], [inf, inf]);
                 is_bullet2_appear[i] = false;
                 const x = query_position(player[cond])[0] - SHOT_DIS;
@@ -683,6 +693,7 @@ update_loop(game_state => {
                     else {
                         hp1 = hp1 + defense_hp1 - SHOT_DEHP;
                         defense_hp1 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -711,9 +722,16 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player[cond], [-inf, -inf]);
-                cond = attacked_right;
-                update_position(player[cond], [x, y]);
+                if(!flag){
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_right;
+                    update_position(player[cond], [x, y]);
+                }
+                else{
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_right;
+                    update_position(player[cond], [x - SHOT_DIS, y]);
+                }
             }
         }
     }
@@ -726,6 +744,7 @@ update_loop(game_state => {
         && math_abs(query_position(player2[cond2])[0] - query_position(player[cond])[0]) < 32
         && math_abs(query_position(player[cond])[1] - query_position(player2[cond2])[1]) < 30
         ){
+            let flag = false;
             const x = query_position(player[cond])[0] - punched_dis;
             const y = query_position(player[cond])[1];
             if(cond === defense_right){
@@ -735,6 +754,7 @@ update_loop(game_state => {
                 else {
                     hp1 = hp1 + defense_hp1 - PUNCHED_DEHP;
                     defense_hp1 = 0;
+                    flag = true;
                 }
             }
            else {
@@ -752,9 +772,16 @@ update_loop(game_state => {
                         }
                     }
                }
-                update_position(player[cond], [-inf, -inf]);
+                if(!flag){
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_right;
+                    update_position(player[cond], [x, y]);
+                }
+                else{
+                    update_position(player[cond], [-inf, -inf]);
                 cond = attacked_right;
-                update_position(player[cond], [x, y]);
+                update_position(player[cond], [x - punched_dis, y]);
+                }
            }
         }    
         else if((cond2 === punch2_right || cond2 === punch_right)
@@ -762,6 +789,7 @@ update_loop(game_state => {
             && math_abs(query_position(player2[cond2])[0] - query_position(player[cond])[0]) < 32
             && math_abs(query_position(player[cond])[1] - query_position(player2[cond2])[1]) < 30
             ){
+                let flag = false;
                 const x = query_position(player[cond])[0] + punched_dis;
                 const y = query_position(player[cond])[1];
                 if(cond === defense_left){
@@ -771,6 +799,7 @@ update_loop(game_state => {
                     else {
                         hp1 = hp1 + defense_hp1 - PUNCHED_DEHP;
                         defense_hp1 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -789,15 +818,23 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player[cond], [-inf, -inf]);
-                cond = attacked_right;
-                update_position(player[cond], [x, y]);
+                if(!flag){
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_right;
+                    update_position(player[cond], [x, y]);
+                }
+                else{
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_right;
+                    update_position(player[cond], [x + punched_dis, y]);
+                }
         }
         else if( (cond2 === wave_left )
             && query_position(player[cond])[0] < query_position(player2[cond2])[0]
             && math_abs(query_position(player2[cond2])[0] - query_position(player[cond])[0]) < 38
             && math_abs(query_position(player[cond])[1] - query_position(player2[cond2])[1]) < 30
             ){
+                let flag = false;
                 const x = query_position(player[cond])[0] - waved_dis;
                 const y = query_position(player[cond])[1];
                 if(cond === defense_right){
@@ -807,6 +844,7 @@ update_loop(game_state => {
                     else {
                         hp1 = hp1 + defense_hp1 - WAVED_DEHP;
                         defense_hp1 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -825,15 +863,23 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player[cond], [-inf, -inf]);
-                cond = attacked_right;
-                update_position(player[cond], [x, y]);
+                if(!flag){
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_right;
+                    update_position(player[cond], [x, y]);
+                }
+                else{
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_right;
+                    update_position(player[cond], [x - waved_dis, y]);
+                }
         }
         else if((cond2 === wave_right)
             && query_position(player[cond])[0] > query_position(player2[cond2])[0]
             && math_abs(query_position(player2[cond2])[0] - query_position(player[cond])[0]) < 38
             && math_abs(query_position(player[cond])[1] - query_position(player2[cond2])[1]) < 30
             ){
+                let flag = false;
                 const x = query_position(player[cond])[0] + waved_dis;
                 const y = query_position(player[cond])[1];
                 if(cond === defense_left){
@@ -843,6 +889,7 @@ update_loop(game_state => {
                     else {
                         hp1 = hp1 + defense_hp1 - WAVED_DEHP;
                         defense_hp1 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -861,9 +908,16 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player[cond], [-inf, -inf]);
-                cond = attacked_right;
-                update_position(player[cond], [x, y]);
+                if(!flag){
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_right;
+                    update_position(player[cond], [x, y]);
+                }
+                else{
+                    update_position(player[cond], [-inf, -inf]);
+                    cond = attacked_right;
+                    update_position(player[cond], [x + waved_dis, y]);
+                }
         }
     }
     
@@ -1513,6 +1567,7 @@ update_loop(game_state => {
         }
         else { 
             if(gameobjects_overlap(player2[cond2], bullets_towards_right1[i])){
+                let flag = false;
                 update_position(bullets_towards_right1[i], [inf, inf]);
                 is_bullet1_appear[i] = false;
                 const x = query_position(player2[cond2])[0] + SHOT_DIS;
@@ -1524,6 +1579,7 @@ update_loop(game_state => {
                     else {
                         hp2 = hp2 + defense_hp2 - SHOT_DEHP;
                         defense_hp2 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -1555,11 +1611,20 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player2[cond2], [-inf, -inf]);
-                cond2 = attacked_left;
-                update_position(player2[cond2], [x, y]);
+                if(!flag){
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x, y]);
+                }
+                else{
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x + SHOT_DIS, y]);
+                }
+                
             }
             if(gameobjects_overlap(player2[cond2], bullets_towards_left1[i])){
+                let flag = false;
                 update_position(bullets_towards_left1[i], [inf, inf]);
                 is_bullet1_appear[i] = false;
                 const x = query_position(player2[cond2])[0] - SHOT_DIS;
@@ -1571,6 +1636,7 @@ update_loop(game_state => {
                     else {
                         hp2 = hp2 + defense_hp2 - SHOT_DEHP;
                         defense_hp2 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -1599,9 +1665,16 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player2[cond2], [-inf, -inf]);
-                cond2 = attacked_right;
-                update_position(player2[cond2], [x, y]);
+                if(!flag){
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x, y]);
+                }
+                else{
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x - SHOT_DIS, y]);
+                }
             }
         }
     }
@@ -1614,6 +1687,7 @@ update_loop(game_state => {
         && math_abs(query_position(player2[cond2])[0] - query_position(player[cond])[0]) < 32
         && math_abs(query_position(player2[cond2])[1] - query_position(player[cond])[1]) < 30
         ){
+            let flag = false;
             const x = query_position(player2[cond2])[0] - punched_dis;
             const y = query_position(player2[cond2])[1];
             if(cond2 === defense_right){
@@ -1623,6 +1697,7 @@ update_loop(game_state => {
                 else {
                     hp2 = hp2 + defense_hp2 - PUNCHED_DEHP;
                     defense_hp2 = 0;
+                    flag = true;
                 }
             }
            else {
@@ -1640,9 +1715,16 @@ update_loop(game_state => {
                         }
                     }
                }
-                update_position(player2[cond2], [-inf, -inf]);
-                cond2 = attacked_right;
-                update_position(player2[cond2], [x, y]);
+               if(!flag){
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x, y]);
+               }
+               else{
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x - punched_dis, y]);
+               }
            }
         }    
         else if((cond === punch2_right || cond === punch_right)
@@ -1650,6 +1732,7 @@ update_loop(game_state => {
             && math_abs(query_position(player2[cond2])[0] - query_position(player[cond])[0]) < 32
             && math_abs(query_position(player2[cond2])[1] - query_position(player[cond])[1]) < 30
             ){
+                let flag = false;
                 const x = query_position(player2[cond2])[0] + punched_dis;
                 const y = query_position(player2[cond2])[1];
                 if(cond2 === defense_left){
@@ -1659,6 +1742,7 @@ update_loop(game_state => {
                     else {
                         hp2 = hp2 + defense_hp2 - PUNCHED_DEHP;
                         defense_hp2 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -1677,15 +1761,23 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player2[cond2], [-inf, -inf]);
-                cond2 = attacked_right;
-                update_position(player2[cond2], [x, y]);
+                if(!flag){
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x, y]);
+                }
+                else{
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x + punched_dis, y]);
+                }
         }
         else if( (cond === wave_left )
             && query_position(player2[cond2])[0] < query_position(player[cond])[0]
             && math_abs(query_position(player2[cond2])[0] - query_position(player[cond])[0]) < 38
             && math_abs(query_position(player2[cond2])[1] - query_position(player[cond])[1]) < 30
-            ){
+            ){  
+                let flag = false;
                 const x = query_position(player2[cond2])[0] - waved_dis;
                 const y = query_position(player2[cond2])[1];
                 if(cond2 === defense_right){
@@ -1695,6 +1787,7 @@ update_loop(game_state => {
                     else {
                         hp2 = hp2 + defense_hp2 - WAVED_DEHP;
                         defense_hp2 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -1713,15 +1806,23 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player2[cond2], [-inf, -inf]);
-                cond2 = attacked_right;
-                update_position(player2[cond2], [x, y]);
+                if(!flag){
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x, y]);
+                }
+                else{
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x - waved_dis, y]);
+                }
         }
         else if((cond  === wave_right)
             && query_position(player2[cond2])[0] > query_position(player[cond])[0]
             && math_abs(query_position(player2[cond2])[0] - query_position(player[cond])[0]) < 38
             && math_abs(query_position(player2[cond2])[1] - query_position(player[cond])[1]) < 30
             ){
+                let flag = false;
                 const x = query_position(player[cond])[0] + waved_dis;
                 const y = query_position(player[cond])[1];
                 if(cond2 === defense_left){
@@ -1731,6 +1832,7 @@ update_loop(game_state => {
                     else {
                         hp2 = hp2 + defense_hp2 - WAVED_DEHP;
                         defense_hp2 = 0;
+                        flag = true;
                     }
                 }
                 else {
@@ -1749,9 +1851,16 @@ update_loop(game_state => {
                         }
                     }
                 }
-                update_position(player2[cond2], [-inf, -inf]);
-                cond2 = attacked_right;
-                update_position(player2[cond2], [x, y]);
+                if(!flag){
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x, y]);
+                }
+                else{
+                    update_position(player2[cond2], [-inf, -inf]);
+                    cond2 = attacked_left;
+                    update_position(player2[cond2], [x + waved_dis, y]);
+                }
         }
     }
     
