@@ -142,7 +142,7 @@ if(gameobjects_overlap(player, gameobjects[0])){
             update_position(start_text1, [300, 55]);
             flag = false;
             if(input_key_down("y")){
-                //game1
+                //game3
                 update_text(start_text1, "it work!");
       }
       if(input_key_down("n")){
