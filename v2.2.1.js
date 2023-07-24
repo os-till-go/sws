@@ -334,11 +334,11 @@ const print_hp = create_text("player1 origin_HP : " + stringify(origin_HP));
 const print_hp2 = create_text("player2 origin_HP : " + stringify(origin_HP2));
 
 const print_point = create_text("0 , 0");
-const game_text = create_text("2P game");
+const game_text = create_text("Stickman Fight");
 const rule_text = create_text("p1 keys:q w e r t y");
 const rule_text1 = create_text("p2 keys:, . / 1 2 3");
 
-update_scale(update_position(game_text, [100, 25]), [2, 2]);
+update_scale(update_position(game_text, [150, 25]), [2, 2]);
 update_position(print_point, [250, 55]);
 update_position(rule_text, [410, 25]);
 update_position(rule_text1, [410, 40]);
