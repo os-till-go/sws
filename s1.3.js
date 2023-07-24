@@ -95,7 +95,13 @@ update_loop(game_state => {
    update_position(player, new_position);
    
 //-----------------------------------------------------------------------------------   
+   
+   
+   
    const audio = create_audio("https://labs.phaser.io/assets/audio/SoundEffects/key.wav", 1);
+
+
+
 
 //--------------------------catch the game---------------------------------------
 
@@ -111,14 +117,20 @@ if(gameobjects_overlap(player, gameobjects[0])){
       flag = false;
       if(input_key_down("y")){
           //game1
+ 
+ 
+ 
           
-update_loop(game_state => {
-   // Press space to play audio
-   if (input_key_down("p")) {
-       play_audio(audio);
-   }
-});
-build_game();
+        update_loop(game_state => {
+    // Press space to play audio
+        if (input_key_down("p")) {
+            play_audio(audio);
+        }
+        });
+        build_game();
+
+
+
 
       }
       if(input_key_down("n")){
